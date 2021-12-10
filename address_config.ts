@@ -11,5 +11,5 @@ function getContractAddressBookByType(type) {
 }
 
 export function getAddressBookShareFilePath() {
-    return `${process.cwd()}/addresses/${getContractAddressBookByType("pixie_test")}.json`;
+    return `${process.cwd()}/addresses/${getContractAddressBookByType("hard")}.json`;
 }

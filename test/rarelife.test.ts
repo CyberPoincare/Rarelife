@@ -45,18 +45,18 @@ describe('Project',  () => {
 
     let actor : any;
 
-    // describe("All Contract", ()=>{
-    //     beforeEach(async ()=>{
-    //         await prepareSigners();
-    //         await getContractAddress();
-    //     })
+    describe("All Contract", ()=>{
+        beforeEach(async ()=>{
+            await prepareSigners();
+            await getContractAddress();
+        })
 
-    //     it("Deploy All", async ()=>{
-    //         await deploy_all(sharedAddressPath);
-    //     }).timeout(60000);
-    // })
+        it("Deploy All", async ()=>{
+            await deploy_all(sharedAddressPath);
+        }).timeout(60000);
+    })
 
-    describe("CodexBaseRandom", ()=>{
+    describe("BaseRandom", ()=>{
         beforeEach(async ()=>{
             await prepareSigners();
             await getContractAddress();
