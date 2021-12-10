@@ -5,6 +5,7 @@
 .DS_Store
 .env.*
 yarn.lock
+package-lock.json
 
 # debug
 npm-debug.log*
