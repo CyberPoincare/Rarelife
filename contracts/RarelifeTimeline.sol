@@ -37,7 +37,7 @@ contract RarelifeTimeline is IRarelifeTimeline, RarelifeConfigurable {
      */
 
     modifier onlyApprovedOrOwner(uint _actor) {
-        require(_isActorApprovedOrOwner(_actor), "RarelifeInformationAge: not approved or owner");
+        require(_isActorApprovedOrOwner(_actor), "RarelifeTimeline: not approved or owner");
         _;
     }
 
@@ -177,7 +177,7 @@ contract RarelifeTimeline is IRarelifeTimeline, RarelifeConfigurable {
                     branchEvtId = _process_event(_actor, _age, branchEvtId, 1);
                     if(branchEvtId > 0 && evts.can_occurred(_actor, branchEvtId, _age)) {
                         branchEvtId = _process_event(_actor, _age, branchEvtId, 2);
-                        require(branchEvtId == 0, "RarelifeInformationAge: only support two level branchs");
+                        require(branchEvtId == 0, "RarelifeTimeline: only support two level branchs");
                     }
                 }
 
@@ -189,9 +189,9 @@ contract RarelifeTimeline is IRarelifeTimeline, RarelifeConfigurable {
     function _process(uint _actor, uint _age) internal
         onlyApprovedOrOwner(_actor)
     {
-        require(character_born[_actor], "RarelifeInformationAge: actor have not born!");
-        //require(actor_events[_actor][_age] == 0, "RarelifeInformationAge: actor already have event!");
-        require(event_ids[_age].length > 0, "RarelifeInformationAge: not exist any event in this age!");
+        require(character_born[_actor], "RarelifeTimeline: actor have not born!");
+        //require(actor_events[_actor][_age] == 0, "RarelifeTimeline: actor already have event!");
+        require(event_ids[_age].length > 0, "RarelifeTimeline: not exist any event in this age!");
 
         _process_talents(_actor, _age);
         _process_events(_actor, _age);
@@ -247,7 +247,7 @@ contract RarelifeTimeline is IRarelifeTimeline, RarelifeConfigurable {
     function born_character(uint _actor) external 
         onlyApprovedOrOwner(_actor)
     {
-        require(!character_born[_actor], "RarelifeInformationAge: already born!");
+        require(!character_born[_actor], "RarelifeTimeline: already born!");
         character_born[_actor] = true;
         born_time_stamps[_actor] = block.timestamp;
 
@@ -257,9 +257,9 @@ contract RarelifeTimeline is IRarelifeTimeline, RarelifeConfigurable {
     function grow(uint _actor) external 
         onlyApprovedOrOwner(_actor)
     {
-        require(character_born[_actor], "RarelifeInformationAge: actor have not born");
-        require(character_birthday[_actor] == false || ages[_actor] < _expected_age(_actor), "RarelifeInformationAge: actor grow time have not come");
-        require(rlRoute.attributes().ability_scores(_actor)._lif > 0, "RarelifeInformationAge: actor dead!");
+        require(character_born[_actor], "RarelifeTimeline: actor have not born");
+        require(character_birthday[_actor] == false || ages[_actor] < _expected_age(_actor), "RarelifeTimeline: actor grow time have not come");
+        require(rlRoute.attributes().ability_scores(_actor)._lif > 0, "RarelifeTimeline: actor dead!");
 
         if(character_birthday[_actor]) {
             //grow one year
@@ -278,8 +278,8 @@ contract RarelifeTimeline is IRarelifeTimeline, RarelifeConfigurable {
     function add_age_event(uint _age, uint _eventId, uint _eventProb) external 
         onlyApprovedOrOwner(ACTOR_DESIGNER)
     {
-        require(_eventId > 0, "RarelifeInformationAge: event id must not zero");
-        require(event_ids[_age].length == event_probs[_age].length, "RarelifeInformationAge: internal ids not match probs");
+        require(_eventId > 0, "RarelifeTimeline: event id must not zero");
+        require(event_ids[_age].length == event_probs[_age].length, "RarelifeTimeline: internal ids not match probs");
         event_ids[_age].push(_eventId);
         event_probs[_age].push(_eventProb);
     }
@@ -287,15 +287,15 @@ contract RarelifeTimeline is IRarelifeTimeline, RarelifeConfigurable {
     function set_age_event_prob(uint _age, uint _eventId, uint _eventProb) external 
         onlyApprovedOrOwner(ACTOR_DESIGNER)
     {
-        require(_eventId > 0, "RarelifeInformationAge: event id must not zero");
-        require(event_ids[_age].length == event_probs[_age].length, "RarelifeInformationAge: internal ids not match probs");
+        require(_eventId > 0, "RarelifeTimeline: event id must not zero");
+        require(event_ids[_age].length == event_probs[_age].length, "RarelifeTimeline: internal ids not match probs");
         for(uint i=0; i<event_ids[_age].length; i++) {
             if(event_ids[_age][i] == _eventId) {
                 event_probs[_age][i] = _eventProb;
                 return;
             }
         }
-        require(false, "RarelifeInformationAge: can not find eventId");
+        require(false, "RarelifeTimeline: can not find eventId");
     }
 
     function active_trigger(uint _eventId, uint _actor, uint[] memory _uintParams) external override
@@ -304,10 +304,10 @@ contract RarelifeTimeline is IRarelifeTimeline, RarelifeConfigurable {
         IRarelifeEvents evts = rlRoute.evts();
 
         address evtProcessorAddress = evts.event_processors(_eventId);
-        require(evtProcessorAddress != address(0), "RarelifeInformationAge: can not find event processor.");
+        require(evtProcessorAddress != address(0), "RarelifeTimeline: can not find event processor.");
 
         uint _age = ages[_actor];
-        require(evts.can_occurred(_actor, _eventId, _age), "RarelifeInformationAge: event check occurrence failed.");
+        require(evts.can_occurred(_actor, _eventId, _age), "RarelifeTimeline: event check occurrence failed.");
         uint branchEvtId = _process_active_event(_actor, _age, _eventId, _uintParams, 0);
 
         //only support two level branchs
@@ -315,7 +315,7 @@ contract RarelifeTimeline is IRarelifeTimeline, RarelifeConfigurable {
             branchEvtId = _process_active_event(_actor, _age, branchEvtId, _uintParams, 1);
             if(branchEvtId > 0 && evts.can_occurred(_actor, branchEvtId, _age)) {
                 branchEvtId = _process_active_event(_actor, _age, branchEvtId, _uintParams, 2);
-                require(branchEvtId == 0, "RarelifeInformationAge: only support two level branchs");
+                require(branchEvtId == 0, "RarelifeTimeline: only support two level branchs");
             }
         }
     }
