@@ -61,6 +61,10 @@ async function startSyncMain(startBlockNum : number) {
 	const rarelifeNames = factory.RarelifeNames__factory.connect(addressBook["RarelifeNames"], wallet);
 	const rarelifeAttributes = factory.RarelifeAttributes__factory.connect(addressBook["RarelifeAttributes"], wallet);
 
+	const rarelifeEventProcessor10000 = factory.RarelifeEventProcessor10000__factory.connect(addressBook["RarelifeEventProcessor10000"], wallet);
+	const rarelifeEventProcessor10001 = factory.RarelifeEventProcessor10001__factory.connect(addressBook["RarelifeEventProcessor10001"], wallet);
+	const rarelifeEventProcessor10002 = factory.RarelifeEventProcessor10002__factory.connect(addressBook["RarelifeEventProcessor10002"], wallet);
+
 	let blockNum = await provider.getBlockNumber();
 	//console.log(startBlockNum, blockNum);
 
@@ -106,6 +110,9 @@ async function startSyncMain(startBlockNum : number) {
 					//Statistics
 					console.log(chalk.yellow(`Gold:`)+chalk.yellowBright(`${ethers.utils.formatEther(await rarelifeGold.totalSupply())}`));
 					console.log(chalk.yellow(`Statistics:`));
+					console.log(`Male:   `+chalk.green(`${await rarelifeEventProcessor10001.maleNum()}`));
+					console.log(`Female: `+chalk.green(`${await rarelifeEventProcessor10002.femaleNum()}`));
+					console.log(`Death:  `+chalk.red(`${await rarelifeEventProcessor10000.deadNum()}`));
 				}
 			}
 
