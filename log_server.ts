@@ -94,7 +94,7 @@ async function startSyncMain(startBlockNum : number) {
 					let timeInfo = formatTime(time);
 
 					//https://github.com/chalk/chalk
-					console.log(`[${timeInfo.M}-${timeInfo.D}]`+chalk.red(`actor#${actor}`)+`is created.`);
+					console.log(`[${timeInfo.M}/${timeInfo.D}/${timeInfo.Y}]`+chalk.red(`actor#${actor}`)+`is created.`);
 				}
 			}
 
