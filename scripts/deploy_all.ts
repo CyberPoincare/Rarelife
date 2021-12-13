@@ -4,6 +4,9 @@ import {ethers} from "hardhat";
 import { Signer } from 'ethers';
 import fs from 'fs-extra';
 import * as factory from '../typechain';
+import { initTalents } from '../utils/initTalents';
+import { initEvents } from '../utils/initEvents';
+import { initTimeline } from '../utils/initTimeline';
 
 let addressBook = {};
 async function getContractAddress(path : string){
@@ -126,5 +129,34 @@ export async function deploy_all(sharedAddressPath : string): Promise<void> {
 
         let route = await operateRarelifeContractRouteAs(deployerWallet);
         await route.registerAttributes(deployTx.address)
+    }
+
+    console.log(`init talents...`);
+    {
+        const tlts = await operateRarelifeTalentsAs(actor0Wallet);
+        await initTalents(tlts);
+        console.log(`talent #1001:`);
+        console.log(await tlts.talent_names(1001));
+        console.log(await tlts.talent_descriptions(1001));
+        console.log((await tlts.talent_exclusivity(1001)).toString());
+        console.log(await tlts.talent_attribute_modifiers(1001));
+    }
+    
+    console.log(`init events...`);
+    {
+        let route = await operateRarelifeContractRouteAs(deployerWallet);
+        const evts = await operateRarelifeEventsAs(actor0Wallet);
+
+        addressBook =  await initEvents(route, evts, deployerWallet, addressBook);
+        await fs.writeFile(sharedAddressPath, JSON.stringify(addressBook, null, 2));
+        console.log(`event #10001:`);
+        console.log(await evts.event_info(10001, 0));
+        console.log(await evts.event_attribute_modifiers(10001, 0));
+    }
+
+    console.log(`init timeline events...`);
+    {
+        const era = await operateRarelifeTimelineAs(actor0Wallet);
+        await initTimeline(era);
     }
 }

@@ -1,0 +1,31 @@
+{
+    "10000": {
+        "id": 10000,
+        "event": "You are dead.",
+        "effect": {
+            "LIF": -1000
+        },
+        "NoRandom": 1
+    },
+    "10001": {
+        "id": 10001,
+        "event": "You were born a boy.",
+        "exclude": "TLT?[1002]",
+        "branch": [
+            60002
+        ]
+    },
+    "10002": {
+        "id": 10002,
+        "event": "You were born a girl.",
+        "exclude": "TLT?[1001]",
+        "branch": [
+            60002
+        ]
+    },
+    "60002": {
+        "id": 60002,
+        "event": "zodiac",
+        "exclude": "EVT?[60002]"
+    }
+}

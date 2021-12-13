@@ -1,0 +1,20 @@
+{
+    "1001": {
+        "id": "1001",
+        "name": "Born to be a man",
+        "description": "Gender must be male",
+        "grade": 1,
+        "exclusive": [
+            "1002"
+        ]
+    },
+    "1002": {
+        "id": "1002",
+        "name": "Born to be a woman",
+        "description": "Gender must be female",
+        "grade": 1,
+        "exclusive": [
+            "1001"
+        ]
+    }
+}
