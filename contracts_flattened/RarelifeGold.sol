@@ -1,9 +1,8 @@
-// Sources flattened with hardhat v2.8.0 https://hardhat.org
+// Sources flattened with hardhat v2.6.4 https://hardhat.org
 
-// File @openzeppelin/contracts/utils/introspection/IERC165.sol@v4.4.1
+// File @openzeppelin/contracts/utils/introspection/IERC165.sol@v4.3.2
 
 // SPDX-License-Identifier: MIT
-// OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)
 
 pragma solidity ^0.8.0;
 
@@ -29,10 +28,9 @@ interface IERC165 {
 }
 
 
-// File @openzeppelin/contracts/token/ERC721/IERC721.sol@v4.4.1
+// File @openzeppelin/contracts/token/ERC721/IERC721.sol@v4.3.2
 
-
-// OpenZeppelin Contracts v4.4.1 (token/ERC721/IERC721.sol)
+// 
 
 pragma solidity ^0.8.0;
 
@@ -174,10 +172,9 @@ interface IERC721 is IERC165 {
 }
 
 
-// File @openzeppelin/contracts/token/ERC721/IERC721Receiver.sol@v4.4.1
+// File @openzeppelin/contracts/token/ERC721/IERC721Receiver.sol@v4.3.2
 
-
-// OpenZeppelin Contracts v4.4.1 (token/ERC721/IERC721Receiver.sol)
+// 
 
 pragma solidity ^0.8.0;
 
@@ -205,10 +202,9 @@ interface IERC721Receiver {
 }
 
 
-// File @openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol@v4.4.1
+// File @openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol@v4.3.2
 
-
-// OpenZeppelin Contracts v4.4.1 (token/ERC721/extensions/IERC721Enumerable.sol)
+// 
 
 pragma solidity ^0.8.0;
 
@@ -238,7 +234,7 @@ interface IERC721Enumerable is IERC721 {
 
 // File contracts/interfaces/RarelifeStructs.sol
 
-
+// 
 pragma solidity ^0.8.4;
 
 library RarelifeStructs {
@@ -269,7 +265,7 @@ library RarelifeStructs {
 
 // File contracts/interfaces/RarelifeInterfaces.sol
 
-
+// 
 pragma solidity ^0.8.4;
 
 
@@ -400,10 +396,9 @@ interface IRarelifeGold is IRarelifeFungible {
 }
 
 
-// File @openzeppelin/contracts/utils/Strings.sol@v4.4.1
+// File @openzeppelin/contracts/utils/Strings.sol@v4.3.2
 
-
-// OpenZeppelin Contracts v4.4.1 (utils/Strings.sol)
+// 
 
 pragma solidity ^0.8.0;
 
@@ -473,7 +468,7 @@ library Strings {
 
 // File contracts/interfaces/RarelifeLibrary.sol
 
-
+// 
 pragma solidity ^0.8.4;
 
 
@@ -711,7 +706,7 @@ contract RarelifeConfigurable {
 
 // File contracts/RarelifeGold.sol
 
-
+// 
 pragma solidity ^0.8.4;
 
 contract RarelifeGold is IRarelifeGold, RarelifeConfigurable {

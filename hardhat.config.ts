@@ -38,6 +38,14 @@ const config: HardhatUserConfig = {
         '0x90cb8f571a5e66159887cf813b4a04556f9d9d37cb6d6c148f48e32b3916d1d4'
       ]
     },
+    polygon_test: {
+      url: "https://matic-mumbai.chainstacklabs.com",
+      accounts: [
+        //do not use test MATICs in address below on other things, please
+        '0x986ad5a63c8fbb38fe3fcfa27948bb05828584b14a491cc7e411a606832eba22',
+        '0x038fea60b6994a873e47ae64416abc8d5c74387eb502166e89b1580b79293cb1'
+      ]
+    },
     pixie_test: {
       url: "https://http-testnet.chain.pixie.xyz",
       accounts: [

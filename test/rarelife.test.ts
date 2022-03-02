@@ -26,7 +26,7 @@ describe('Project',  () => {
         [deployerWallet, actor0Wallet] = await ethers.getSigners();
     }
 
-    const sharedAddressPath = getAddressBookShareFilePath();
+    const sharedAddressPath = getAddressBookShareFilePath("hard");
     let addressBook = {};
     async function getContractAddress(){
         // @ts-ignore

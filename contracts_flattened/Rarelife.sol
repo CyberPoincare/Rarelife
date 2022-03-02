@@ -1,9 +1,8 @@
-// Sources flattened with hardhat v2.8.0 https://hardhat.org
+// Sources flattened with hardhat v2.6.4 https://hardhat.org
 
-// File @openzeppelin/contracts/utils/introspection/IERC165.sol@v4.4.1
+// File @openzeppelin/contracts/utils/introspection/IERC165.sol@v4.3.2
 
 // SPDX-License-Identifier: MIT
-// OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)
 
 pragma solidity ^0.8.0;
 
@@ -29,10 +28,9 @@ interface IERC165 {
 }
 
 
-// File @openzeppelin/contracts/token/ERC721/IERC721.sol@v4.4.1
+// File @openzeppelin/contracts/token/ERC721/IERC721.sol@v4.3.2
 
-
-// OpenZeppelin Contracts v4.4.1 (token/ERC721/IERC721.sol)
+// 
 
 pragma solidity ^0.8.0;
 
@@ -174,10 +172,9 @@ interface IERC721 is IERC165 {
 }
 
 
-// File @openzeppelin/contracts/token/ERC721/IERC721Receiver.sol@v4.4.1
+// File @openzeppelin/contracts/token/ERC721/IERC721Receiver.sol@v4.3.2
 
-
-// OpenZeppelin Contracts v4.4.1 (token/ERC721/IERC721Receiver.sol)
+// 
 
 pragma solidity ^0.8.0;
 
@@ -205,10 +202,9 @@ interface IERC721Receiver {
 }
 
 
-// File @openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol@v4.4.1
+// File @openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol@v4.3.2
 
-
-// OpenZeppelin Contracts v4.4.1 (token/ERC721/extensions/IERC721Metadata.sol)
+// 
 
 pragma solidity ^0.8.0;
 
@@ -234,10 +230,9 @@ interface IERC721Metadata is IERC721 {
 }
 
 
-// File @openzeppelin/contracts/utils/Address.sol@v4.4.1
+// File @openzeppelin/contracts/utils/Address.sol@v4.3.2
 
-
-// OpenZeppelin Contracts v4.4.1 (utils/Address.sol)
+// 
 
 pragma solidity ^0.8.0;
 
@@ -455,10 +450,9 @@ library Address {
 }
 
 
-// File @openzeppelin/contracts/utils/Context.sol@v4.4.1
+// File @openzeppelin/contracts/utils/Context.sol@v4.3.2
 
-
-// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
+// 
 
 pragma solidity ^0.8.0;
 
@@ -483,10 +477,9 @@ abstract contract Context {
 }
 
 
-// File @openzeppelin/contracts/utils/Strings.sol@v4.4.1
+// File @openzeppelin/contracts/utils/Strings.sol@v4.3.2
 
-
-// OpenZeppelin Contracts v4.4.1 (utils/Strings.sol)
+// 
 
 pragma solidity ^0.8.0;
 
@@ -554,10 +547,9 @@ library Strings {
 }
 
 
-// File @openzeppelin/contracts/utils/introspection/ERC165.sol@v4.4.1
+// File @openzeppelin/contracts/utils/introspection/ERC165.sol@v4.3.2
 
-
-// OpenZeppelin Contracts v4.4.1 (utils/introspection/ERC165.sol)
+// 
 
 pragma solidity ^0.8.0;
 
@@ -585,10 +577,9 @@ abstract contract ERC165 is IERC165 {
 }
 
 
-// File @openzeppelin/contracts/token/ERC721/ERC721.sol@v4.4.1
+// File @openzeppelin/contracts/token/ERC721/ERC721.sol@v4.3.2
 
-
-// OpenZeppelin Contracts v4.4.1 (token/ERC721/ERC721.sol)
+// 
 
 pragma solidity ^0.8.0;
 
@@ -721,7 +712,10 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
      * @dev See {IERC721-setApprovalForAll}.
      */
     function setApprovalForAll(address operator, bool approved) public virtual override {
-        _setApprovalForAll(_msgSender(), operator, approved);
+        require(operator != _msgSender(), "ERC721: approve to caller");
+
+        _operatorApprovals[_msgSender()][operator] = approved;
+        emit ApprovalForAll(_msgSender(), operator, approved);
     }
 
     /**
@@ -942,21 +936,6 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
     }
 
     /**
-     * @dev Approve `operator` to operate on all of `owner` tokens
-     *
-     * Emits a {ApprovalForAll} event.
-     */
-    function _setApprovalForAll(
-        address owner,
-        address operator,
-        bool approved
-    ) internal virtual {
-        require(owner != operator, "ERC721: approve to caller");
-        _operatorApprovals[owner][operator] = approved;
-        emit ApprovalForAll(owner, operator, approved);
-    }
-
-    /**
      * @dev Internal function to invoke {IERC721Receiver-onERC721Received} on a target address.
      * The call is not executed if the target address is not a contract.
      *
@@ -1011,10 +990,9 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
 }
 
 
-// File @openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol@v4.4.1
+// File @openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol@v4.3.2
 
-
-// OpenZeppelin Contracts v4.4.1 (token/ERC721/extensions/IERC721Enumerable.sol)
+// 
 
 pragma solidity ^0.8.0;
 
@@ -1042,10 +1020,9 @@ interface IERC721Enumerable is IERC721 {
 }
 
 
-// File @openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol@v4.4.1
+// File @openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol@v4.3.2
 
-
-// OpenZeppelin Contracts v4.4.1 (token/ERC721/extensions/ERC721Enumerable.sol)
+// 
 
 pragma solidity ^0.8.0;
 
@@ -1209,7 +1186,7 @@ abstract contract ERC721Enumerable is ERC721, IERC721Enumerable {
 
 // File contracts/interfaces/RarelifeStructs.sol
 
-
+// 
 pragma solidity ^0.8.4;
 
 library RarelifeStructs {
@@ -1240,7 +1217,7 @@ library RarelifeStructs {
 
 // File contracts/interfaces/RarelifeInterfaces.sol
 
-
+// 
 pragma solidity ^0.8.4;
 
 
@@ -1373,7 +1350,7 @@ interface IRarelifeGold is IRarelifeFungible {
 
 // File contracts/interfaces/RarelifeLibrary.sol
 
-
+// 
 pragma solidity ^0.8.4;
 
 
@@ -1611,7 +1588,7 @@ contract RarelifeConfigurable {
 
 // File contracts/Rarelife.sol
 
-
+// 
 pragma solidity ^0.8.4;
 
 

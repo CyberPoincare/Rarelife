@@ -5,9 +5,13 @@ import { deploy_new_events } from './scripts/deploy_new_events';
 import { getAddressBookShareFilePath } from './address_config';
 
 console.log("Deploy New Event Contracts");
+const args = require('minimist')(process.argv.slice(2));
+if (args.network) {
+	env.changeNetwork(args.network);
+}
 
 async function main(): Promise<void> {
-    let addressBookFile = getAddressBookShareFilePath();
+    let addressBookFile = getAddressBookShareFilePath(args.network);
 
     //new event ids
     let evtMap = {
@@ -23,12 +27,6 @@ async function main(): Promise<void> {
     ];
 
     await deploy_new_events(addressBookFile, age, ageEvts, evtMap);
-}
-
-const args = require('minimist')(process.argv.slice(2));
-
-if (args.network) {
-	env.changeNetwork(args.network);
 }
 
 main()

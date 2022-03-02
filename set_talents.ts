@@ -9,6 +9,10 @@ import { Signer } from 'ethers';
 import { getAddressBookShareFilePath } from './address_config';
 
 console.log("Set New Talents");
+const args = require('minimist')(process.argv.slice(2));
+if (args.network) {
+	env.changeNetwork(args.network);
+}
 
 let addressBook = {};
 async function getContractAddress(path : string){
@@ -19,7 +23,7 @@ async function getContractAddress(path : string){
 async function operateRarelifeTalentsAs(wallet: Signer){return factory.RarelifeTalents__factory.connect(addressBook["RarelifeTalents"], wallet);}
 
 async function main(): Promise<void> {
-    let addressBookFile = getAddressBookShareFilePath();
+    let addressBookFile = getAddressBookShareFilePath(args.network);
     await getContractAddress(addressBookFile);
     const [deployerWallet, actor0Wallet] = await ethers.getSigners();
 
@@ -34,12 +38,6 @@ async function main(): Promise<void> {
 
     let tlts = await operateRarelifeTalentsAs(actor0Wallet);
     await setTalents(tlts, tlts_list);
-}
-
-const args = require('minimist')(process.argv.slice(2));
-
-if (args.network) {
-	env.changeNetwork(args.network);
 }
 
 main()

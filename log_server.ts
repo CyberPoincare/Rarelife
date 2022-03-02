@@ -17,6 +17,10 @@ import chalk from 'chalk';
 import { getAddressBookShareFilePath } from './address_config';
 
 console.log("Log Server");
+const args = require('minimist')(process.argv.slice(2));
+if (args.network) {
+	env.changeNetwork(args.network);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function str_pad( hex : string ){
@@ -43,7 +47,7 @@ function formatTime(time) {
 
 var addressBook = {};
 async function initAddress() {
-	addressBook = JSON.parse(await fs.readFileSync(await getAddressBookShareFilePath()));
+	addressBook = JSON.parse(await fs.readFileSync(await getAddressBookShareFilePath(args.network)));
 	console.log(addressBook);
 }
 
@@ -239,12 +243,6 @@ async function startSyncMain(startBlockNum : number) {
 	setTimeout(function () {
 		startSyncMain(startBlockNum);
 	}, 1000);
-}
-
-const args = require('minimist')(process.argv.slice(2));
-
-if (args.network) {
-	env.changeNetwork(args.network);
 }
 
 if (args.start)
