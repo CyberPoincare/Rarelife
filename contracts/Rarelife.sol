@@ -106,6 +106,6 @@ contract Rarelife is IRarelife, ERC721Enumerable {
         string memory json = Base64.encode(bytes(string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[4]))));
 
         //final output
-        return string(abi.encodePacked('data:application/json;charset=utf-8;base64,', json));
+        return string(abi.encodePacked('data:application/json;base64,', json));
     }
 }

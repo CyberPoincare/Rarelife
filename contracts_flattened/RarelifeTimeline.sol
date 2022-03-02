@@ -1059,7 +1059,9 @@ contract RarelifeTimeline is IRarelifeTimeline, RarelifeConfigurable {
             uint y = 20*i;
             parts[2] = string(abi.encodePacked(parts[2],
                 string(abi.encodePacked('<text x="10" y="', Strings.toString(40+y), '" class="base">', evts.event_info(eventId, _actor), '</text>'))));
-            evtJson = string(abi.encodePacked(evtJson, Strings.toString(eventId), ','));
+            evtJson = string(abi.encodePacked(evtJson, Strings.toString(eventId)));
+            if(i < (actor_events[_actor][ages[_actor]].length-1))
+                evtJson = string(abi.encodePacked(evtJson, ','));
         }
         //end svg
         parts[3] = string(abi.encodePacked('</svg>'));
@@ -1075,7 +1077,7 @@ contract RarelifeTimeline is IRarelifeTimeline, RarelifeConfigurable {
         string memory json = Base64.encode(bytes(string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[4]))));
 
         //final output
-        return string(abi.encodePacked('data:application/json;charset=utf-8;base64,', json));
+        return string(abi.encodePacked('data:application/json;base64,', json));
     }
 
     function tokenURIByAge(uint256 _actor, uint _age) public view returns (string memory) {
@@ -1108,6 +1110,6 @@ contract RarelifeTimeline is IRarelifeTimeline, RarelifeConfigurable {
         string memory json = Base64.encode(bytes(string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[4]))));
 
         //final output
-        return string(abi.encodePacked('data:application/json;charset=utf-8;base64,', json));
+        return string(abi.encodePacked('data:application/json;base64,', json));
     }
 }

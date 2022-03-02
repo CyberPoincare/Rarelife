@@ -923,21 +923,23 @@ contract RarelifeTalents is IRarelifeTalents, RarelifeConfigurable {
             parts[1] = string(abi.encodePacked(parts[1],
                 string(abi.encodePacked('<text x="10" y="', Strings.toString(20+y), '" class="base" stroke="yellow">', talent_names[tlt], '</text>')),
                 string(abi.encodePacked('<text x="10" y="', Strings.toString(40+y), '" class="base">', talent_descriptions[tlt], '</text>'))));
-            tltJson = string(abi.encodePacked(tltJson, Strings.toString(tlt), ','));
+            tltJson = string(abi.encodePacked(tltJson, Strings.toString(tlt)));
+            if(i < (_actor_talents[_actor].length-1))
+                tltJson = string(abi.encodePacked(tltJson, ','));
         }
         //end svg
         parts[2] = string(abi.encodePacked('</svg>'));
         string memory svg = string(abi.encodePacked(parts[0], parts[1], parts[2]));
 
         //start json
-        parts[0] = string(abi.encodePacked('{"name": "Actor #', Strings.toString(_actor), ' talents:"'));
-        parts[1] = ', "description": "This is not a game"';
+        parts[0] = string(abi.encodePacked('{"name": "Actor #', Strings.toString(_actor), ' talents"'));
+        parts[1] = ', "description": "This is not a game."';
         parts[2] = string(abi.encodePacked(', "data": {', '"TLT": [', tltJson, ']}'));
         //end json with svg
         parts[3] = string(abi.encodePacked(', "image": "data:image/svg+xml;base64,', Base64.encode(bytes(svg)), '"}'));
         string memory json = Base64.encode(bytes(string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3]))));
 
         //final output
-        return string(abi.encodePacked('data:application/json;charset=utf-8;base64,', json));
+        return string(abi.encodePacked('data:application/json;base64,', json));
     }
 }

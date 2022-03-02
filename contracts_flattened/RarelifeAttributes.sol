@@ -882,8 +882,8 @@ contract RarelifeAttributes is IRarelifeAttributes, RarelifeConfigurable {
         string memory svg = string(abi.encodePacked(parts[0], parts[1]));
 
         //start json
-        parts[0] = string(abi.encodePacked('{"name": "Actor #', Strings.toString(_actor), ' Attributes:"'));
-        parts[1] = ', "description": "This is not a game"';
+        parts[0] = string(abi.encodePacked('{"name": "Actor #', Strings.toString(_actor), ' attributes"'));
+        parts[1] = ', "description": "This is not a game."';
         parts[2] = string(abi.encodePacked(', "data": {', '"CHR": ', Strings.toString(_attr._chr)));
         parts[3] = string(abi.encodePacked(', "INT": ', Strings.toString(_attr._int)));
         parts[4] = string(abi.encodePacked(', "STR": ', Strings.toString(_attr._str)));
@@ -896,6 +896,6 @@ contract RarelifeAttributes is IRarelifeAttributes, RarelifeConfigurable {
         string memory json = Base64.encode(bytes(string(abi.encodePacked(parts[0], parts[1], parts[2]))));
 
         //final output
-        return string(abi.encodePacked('data:application/json;charset=utf-8;base64,', json));
+        return string(abi.encodePacked('data:application/json;base64,', json));
     }
 }

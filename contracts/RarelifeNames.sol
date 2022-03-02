@@ -162,7 +162,7 @@ contract RarelifeNames is IRarelifeNames, RarelifeConfigurable, ERC721Enumerable
         is_claimed = _is_name_claimed[to_lower(string(abi.encodePacked(lastName,firstName)))];
     }
 
-    function tokenURI(uint name_id) public override view returns (string memory output) {
+    function tokenURI(uint256 name_id) public override view returns (string memory) {
         string[7] memory parts;
         //start svg
         parts[0] = '<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 350 350"><style>.base { fill: white; font-family: serif; font-size: 14px; }</style><rect width="100%" height="100%" fill="black" />';
@@ -177,16 +177,16 @@ contract RarelifeNames is IRarelifeNames, RarelifeConfigurable, ERC721Enumerable
 
          //start json
         parts[0] = string(abi.encodePacked('{"name": "Name #', Strings.toString(name_id), '"'));
-        parts[1] = ', "description": "This is not a game"';
-        parts[2] = string(abi.encodePacked(', "data": {', '"name": ', names[name_id]));
-        parts[3] = string(abi.encodePacked(', "firstName": ', first_names[name_id]));
-        parts[4] = string(abi.encodePacked(', "lastName": ', last_names[name_id], '}'));
+        parts[1] = ', "description": "This is not a game."';
+        parts[2] = string(abi.encodePacked(', "data": {', '"name": "', names[name_id]));
+        parts[3] = string(abi.encodePacked('", "firstName": "', first_names[name_id]));
+        parts[4] = string(abi.encodePacked('", "lastName": "', last_names[name_id], '"}'));
 
         //end json with svg
         parts[5] = string(abi.encodePacked(', "image": "data:image/svg+xml;base64,', Base64.encode(bytes(svg)), '"}'));
         string memory json = Base64.encode(bytes(string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]))));
 
         //final output
-        return string(abi.encodePacked('data:application/json;charset=utf-8;base64,', json));
+        return string(abi.encodePacked('data:application/json;base64,', json));
     }
 }
